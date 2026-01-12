@@ -1,0 +1,73 @@
+/*a. Write a program to read and translate integers into numbers.
+e.g. 1=ONE
+12 = ONE TWO
+856 = EIGHT FIVE SIX
+Generate an error if the number of digits is more than 3
+*/
+
+#include <iostream>
+#include<string>
+using namespace std;
+class Solution
+{
+public:
+    int IntegerToString(int n)
+    {
+        string num= to_string(n);
+        if(num.length()>3)
+        {
+            cout<<" ERROR ! Length greater than 3";
+            return 0;
+        }
+
+        for(char c:num)
+        {
+            switch(c)
+            {
+            case '0':
+                cout<<" ZERO";
+                break;
+            case '1':
+                cout<<" ONE";
+                break;
+            case '2':
+                cout<<" TWO";
+                break;
+            case '3':
+                cout<<" THREE";
+                break;
+            case '4':
+                cout<<" FOUR";
+                break;
+            case '5':
+                cout<<" FIVE";
+                break;
+            case '6':
+                cout<<" SIX";
+                break;
+            case '7':
+                cout<<" SEVEN";
+                break;
+            case '8':
+                cout<<" EIGHT";
+                break;
+            case '9':
+                cout<<" NINE";
+                break;
+            default:
+                cout<<" ERROR! INVALID";
+            }
+        }
+        return 0;
+    }
+};
+
+int main()
+{
+    Solution sol;
+    int n;
+    cout<<"enter a number: ";
+    cin>>n;
+    sol.IntegerToString(n);
+    return 0;
+}
