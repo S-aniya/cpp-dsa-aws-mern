@@ -1,0 +1,1210 @@
+<body>
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+
+    <h2>Welcome Back ✨</h2>
+
+    <p>
+      Enter your name to continue your 42-Day Journey
+    </p>
+
+    <input 
+      type="text" 
+      id="usernameInput" 
+      placeholder="Enter your name..."
+    >
+
+    <button onclick="saveUser()">
+      Start Grinding 🚀
+    </button>
+
+  </div>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#071018;
+  --bg2:#0d1722;
+  --card:rgba(18,26,39,0.82);
+  --card2:rgba(28,38,55,0.9);
+
+  --border:rgba(255,255,255,0.08);
+
+  --text:#f8fafc;
+  --muted:#94a3b8;
+
+  --green:#34d399;
+  --blue:#60a5fa;
+  --purple:#a78bfa;
+  --pink:#f472b6;
+  --orange:#fb923c;
+
+  --shadow:
+    0 10px 40px rgba(0,0,0,.35);
+
+  --radius:22px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:
+    radial-gradient(circle at top left,#122033 0%,transparent 30%),
+    radial-gradient(circle at bottom right,#0f2a24 0%,transparent 30%),
+    linear-gradient(135deg,#071018,#0b1320,#0d1722);
+
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+  padding:2rem;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-track{
+  background:#09111b;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#1f2d3f;
+  border-radius:10px;
+}
+
+/* WRAPPER */
+
+.wrap{
+  max-width:1450px;
+  margin:auto;
+}
+
+/* HERO */
+
+.hero{
+  margin-bottom:2rem;
+  padding:2.2rem;
+  border-radius:30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(96,165,250,.18),
+      rgba(167,139,250,.12),
+      rgba(52,211,153,.08)
+    );
+
+  border:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(18px);
+
+  box-shadow:var(--shadow);
+
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  background:rgba(96,165,250,.08);
+  border-radius:50%;
+  right:-60px;
+  top:-60px;
+  filter:blur(30px);
+}
+
+.hero h1{
+  font-size:3rem;
+  font-weight:700;
+  margin-bottom:.6rem;
+  position:relative;
+  z-index:2;
+}
+
+.hero p{
+  color:#cbd5e1;
+  max-width:850px;
+  line-height:1.8;
+  font-size:1rem;
+  position:relative;
+  z-index:2;
+}
+
+/* TABS */
+
+.tabs{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+  margin-bottom:2rem;
+}
+
+.tab{
+  border:none;
+  padding:.95rem 1.5rem;
+  border-radius:999px;
+
+  background:rgba(255,255,255,.05);
+
+  color:var(--muted);
+
+  cursor:pointer;
+
+  transition:.25s ease;
+
+  font-size:.92rem;
+  font-weight:500;
+
+  border:1px solid rgba(255,255,255,.06);
+
+  backdrop-filter:blur(10px);
+}
+
+.tab:hover{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.08);
+}
+
+.tab.active{
+  background:
+    linear-gradient(
+      135deg,
+      var(--green),
+      #10b981
+    );
+
+  color:white;
+
+  box-shadow:
+    0 8px 30px rgba(52,211,153,.35);
+}
+
+/* SECTIONS */
+
+.sec{
+  display:none;
+}
+
+.sec.active{
+  display:block;
+  animation:fade .35s ease;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* STATS */
+
+.total-bar{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+  gap:1rem;
+  margin-bottom:2rem;
+}
+
+.tot{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:22px;
+
+  padding:1.2rem;
+
+  backdrop-filter:blur(16px);
+
+  box-shadow:var(--shadow);
+
+  transition:.25s ease;
+}
+
+.tot:hover{
+  transform:translateY(-4px);
+}
+
+.tot strong{
+  display:block;
+  font-size:1.4rem;
+  margin-bottom:.45rem;
+}
+
+/* WEEK NAV */
+
+.week-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.8rem;
+  margin-bottom:1.6rem;
+}
+
+.wnav{
+  border:none;
+
+  background:rgba(255,255,255,.05);
+
+  color:var(--muted);
+
+  padding:.75rem 1.25rem;
+
+  border-radius:999px;
+
+  cursor:pointer;
+
+  transition:.22s ease;
+
+  font-size:.88rem;
+
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.wnav:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.wnav.sel{
+  background:linear-gradient(135deg,var(--blue),#2563eb);
+
+  color:white;
+
+  box-shadow:
+    0 8px 24px rgba(96,165,250,.35);
+
+  font-weight:600;
+}
+
+/* DAY LIST */
+
+.day-list{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+
+/* DAY CARD */
+
+.day-card{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:26px;
+
+  overflow:hidden;
+
+  transition:.3s ease;
+
+  backdrop-filter:blur(14px);
+
+  box-shadow:var(--shadow);
+}
+
+.day-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,255,255,.14);
+}
+
+.day-header{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+
+  padding:1.25rem 1.5rem;
+
+  cursor:pointer;
+}
+
+.day-num{
+  min-width:55px;
+  height:55px;
+
+  border-radius:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(96,165,250,.18),
+      rgba(167,139,250,.12)
+    );
+
+  color:white;
+
+  font-weight:700;
+  font-size:.95rem;
+}
+
+.day-title{
+  flex:1;
+
+  font-size:1rem;
+  font-weight:600;
+}
+
+/* TAGS */
+
+.day-pills{
+  display:flex;
+  gap:.45rem;
+  flex-wrap:wrap;
+}
+
+.pill{
+  font-size:.72rem;
+
+  padding:.4rem .7rem;
+
+  border-radius:999px;
+
+  font-weight:600;
+}
+
+.p-lc{
+  background:rgba(96,165,250,.16);
+  color:var(--blue);
+}
+
+.p-rag{
+  background:rgba(167,139,250,.16);
+  color:var(--purple);
+}
+
+.p-web{
+  background:rgba(251,146,60,.16);
+  color:var(--orange);
+}
+
+.p-gate{
+  background:rgba(52,211,153,.16);
+  color:var(--green);
+}
+
+.p-proj{
+  background:rgba(244,114,182,.16);
+  color:var(--pink);
+}
+
+/* CHEVRON */
+
+.chevron{
+  transition:.25s ease;
+  color:#94a3b8;
+}
+
+.chevron.open{
+  transform:rotate(180deg);
+}
+
+/* BODY */
+
+.day-body{
+  display:none;
+
+  padding:1.5rem;
+
+  border-top:1px solid rgba(255,255,255,.06);
+}
+
+.day-body.open{
+  display:block;
+  animation:fade .25s ease;
+}
+
+/* SLOT GRID */
+
+.slot-grid{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+
+.slot-row{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:1rem;
+}
+
+.slot-time{
+  color:#94a3b8;
+  font-size:.88rem;
+  padding-top:.2rem;
+}
+
+.slot-content{
+  background:rgba(255,255,255,.035);
+
+  border:1px solid rgba(255,255,255,.04);
+
+  border-radius:18px;
+
+  padding:1rem 1.1rem;
+
+  line-height:1.8;
+
+  transition:.25s ease;
+}
+
+.slot-content:hover{
+  background:rgba(255,255,255,.05);
+}
+
+.slot-content strong{
+  display:block;
+  margin-bottom:.35rem;
+  font-size:.95rem;
+}
+
+/* YOUTUBE LINK */
+
+.yt-link{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+
+  margin-top:.75rem;
+
+  text-decoration:none;
+
+  color:#7dd3fc;
+
+  font-size:.85rem;
+}
+
+.yt-link:hover{
+  text-decoration:underline;
+}
+
+/* OUTPUT BADGE */
+
+.output-badge{
+  display:inline-block;
+
+  margin-top:1rem;
+
+  background:rgba(52,211,153,.15);
+
+  color:var(--green);
+
+  padding:.45rem .8rem;
+
+  border-radius:999px;
+
+  font-size:.75rem;
+
+  font-weight:600;
+}
+
+/* PROJECTS */
+
+.proj-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+  gap:1.2rem;
+}
+
+.proj-card{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:24px;
+
+  padding:1.35rem;
+
+  transition:.28s ease;
+
+  backdrop-filter:blur(14px);
+
+  box-shadow:var(--shadow);
+}
+
+.proj-card:hover{
+  transform:translateY(-6px);
+}
+
+.proj-card h4{
+  font-size:1.05rem;
+  margin:.7rem 0;
+}
+
+.proj-card p{
+  color:#cbd5e1;
+  line-height:1.8;
+}
+
+.stack{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.45rem;
+  margin-top:1rem;
+}
+
+.stag{
+  background:rgba(255,255,255,.07);
+
+  padding:.35rem .7rem;
+
+  border-radius:999px;
+
+  font-size:.72rem;
+
+  color:#dbeafe;
+}
+
+/* RAG PHASES */
+
+.rag-phase{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:24px;
+
+  padding:1.4rem;
+
+  margin-bottom:1rem;
+
+  backdrop-filter:blur(12px);
+
+  box-shadow:var(--shadow);
+}
+
+.rp-header{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  margin-bottom:1rem;
+}
+
+.rag-phase h4{
+  font-size:1rem;
+}
+
+.rag-phase p{
+  color:#cbd5e1;
+  line-height:1.8;
+  margin-bottom:1rem;
+}
+
+.rag-step{
+  color:#cbd5e1;
+  line-height:1.8;
+  margin-bottom:.35rem;
+  padding-left:1rem;
+  position:relative;
+}
+
+.rag-step::before{
+  content:"✦";
+  position:absolute;
+  left:0;
+  color:var(--purple);
+}
+
+.rag-phase code{
+  background:rgba(255,255,255,.06);
+
+  padding:.15rem .4rem;
+
+  border-radius:6px;
+
+  color:#f8fafc;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  body{
+    padding:1rem;
+  }
+
+  .hero{
+    padding:1.5rem;
+  }
+
+  .hero h1{
+    font-size:2rem;
+  }
+
+  .slot-row{
+    grid-template-columns:1fr;
+  }
+
+  .day-header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .day-num{
+    width:50px;
+    height:50px;
+  }
+}
+</style>
+</body>
+
+<div class="wrap">
+<div class="hero">
+  <h1>42-Day Master Plan 🚀</h1>
+
+  <p>
+    A structured roadmap for becoming interview-ready through
+    GATE prep, LeetCode, RAG systems, full-stack development,
+    and high-impact resume projects.
+  </p>
+</div>
+
+<h2 class="sr-only">42-day master study and project plan for Saniya — LeetCode, GATE, Web Dev, RAG project, and mini-projects</h2>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('schedule','schedule-btn',this)">Day-by-day schedule</button>
+  <button class="tab" id="schedule-btn" onclick="showTab('rag','rag-btn',this)">RAG pipeline explained</button>
+  <button class="tab" id="rag-btn" onclick="showTab('projects','projects-btn',this)">Mini-projects for resume</button>
+</div>
+
+<div id="schedule" class="sec active">
+  <div class="total-bar">
+    <div class="tot"><strong>5–6 hrs/day</strong>Total daily effort</div>
+    <div class="tot"><strong>6:00–8:00 AM</strong>GATE prep (2 hrs)</div>
+    <div class="tot"><strong>10:00 AM–12:30 PM</strong>RAG / Web Dev (2.5 hrs)</div>
+    <div class="tot"><strong>3:00–4:00 PM</strong>LeetCode (1 hr)</div>
+    <div class="tot"><strong>8:00–9:00 PM</strong>Review + mini-project (1 hr)</div>
+  </div>
+  <div class="week-nav">
+    <button class="wnav sel" onclick="showWeek(1,this)">Week 1</button>
+    <button class="wnav" onclick="showWeek(2,this)">Week 2</button>
+    <button class="wnav" onclick="showWeek(3,this)">Week 3</button>
+    <button class="wnav" onclick="showWeek(4,this)">Week 4</button>
+    <button class="wnav" onclick="showWeek(5,this)">Week 5</button>
+    <button class="wnav" onclick="showWeek(6,this)">Week 6</button>
+  </div>
+  <div class="day-list" id="day-list"></div>
+</div>
+
+<div id="rag" class="sec rag-sec">
+  <div class="rag-phase">
+    <div class="rp-header"><span class="pill p-rag">Phase 1</span><h4>Document ingestion + chunking</h4></div>
+    <p>The pipeline starts by loading raw documents (PDFs, text, DOCX). Raw text is extracted, cleaned (removing headers, footers, extra whitespace), then split into overlapping chunks so no context is cut mid-sentence.</p>
+    <div class="rag-steps">
+      <div class="rag-step">Load with <code>PyPDFLoader</code> or <code>UnstructuredFileLoader</code> (LangChain)</div>
+      <div class="rag-step">Clean: strip boilerplate, normalize whitespace, remove page artifacts</div>
+      <div class="rag-step">Chunk: <code>RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=64)</code></div>
+      <div class="rag-step">Each chunk carries metadata: source filename, page number, chunk index</div>
+    </div>
+    <a class="yt-link" href="https://www.youtube.com/watch?v=T-D1OfcDW1M">LangChain document loaders + splitters — James Briggs</a>
+  </div>
+  <div class="rag-phase">
+    <div class="rp-header"><span class="pill p-rag">Phase 2</span><h4>Embeddings + vector store</h4></div>
+    <p>Each chunk is converted to a dense vector (embedding) that captures semantic meaning. Similar chunks end up geometrically close in vector space. These vectors are stored in FAISS (local, fast) or ChromaDB (persistent).</p>
+    <div class="rag-steps">
+      <div class="rag-step">Use <code>HuggingFaceEmbeddings("all-MiniLM-L6-v2")</code> — free, no API key, 384-dim</div>
+      <div class="rag-step">Or <code>OpenAIEmbeddings("text-embedding-3-small")</code> — better quality, costs money</div>
+      <div class="rag-step">Store: <code>FAISS.from_documents(chunks, embeddings)</code> — index saved to disk</div>
+      <div class="rag-step">For upgrade: ChromaDB with persist_directory for cross-session retrieval</div>
+    </div>
+    <a class="yt-link" href="https://www.youtube.com/watch?v=ySus5ZS0b94">Vector databases and FAISS — Sam Witteveen</a>
+  </div>
+  <div class="rag-phase">
+    <div class="rp-header"><span class="pill p-rag">Phase 3</span><h4>Retrieval — query → chunks</h4></div>
+    <p>When a user asks a question, it is embedded with the same model. FAISS does nearest-neighbour search and returns the top-k most semantically similar chunks. This is the "R" in RAG.</p>
+    <div class="rag-steps">
+      <div class="rag-step">Embed query → similarity search → top-k=4 chunks returned</div>
+      <div class="rag-step">Upgrade: Hybrid search — BM25 (keyword) + dense (embedding), weighted merge</div>
+      <div class="rag-step">Upgrade: Query rewriting — LLM rewrites ambiguous query before retrieval</div>
+      <div class="rag-step">Upgrade: MMR (Maximal Marginal Relevance) for diverse, non-redundant results</div>
+    </div>
+    <a class="yt-link" href="https://www.youtube.com/watch?v=LhnCsygAvzY">Advanced retrieval techniques — LangChain channel</a>
+  </div>
+  <div class="rag-phase">
+    <div class="rp-header"><span class="pill p-rag">Phase 4</span><h4>Generation — chunks → answer with citations</h4></div>
+    <p>The retrieved chunks are injected into a prompt template alongside the user's question. The LLM generates a grounded answer. Citations are extracted from chunk metadata and shown to the user — this is the biggest interview differentiator.</p>
+    <div class="rag-steps">
+      <div class="rag-step">Prompt template: "Answer using only the context below. Cite sources. Context: {context} Question: {question}"</div>
+      <div class="rag-step">LLM: <code>ChatOpenAI(model="gpt-3.5-turbo")</code> or free: <code>HuggingFaceHub(repo_id="mistralai/Mistral-7B-Instruct-v0.2")</code></div>
+      <div class="rag-step">Parse response to extract [Source: filename, Page: N] citations</div>
+      <div class="rag-step">Upgrade: Add memory with <code>ConversationBufferMemory</code> for multi-turn chat</div>
+    </div>
+    <a class="yt-link" href="https://www.youtube.com/watch?v=3yPBVii7Ct0">RAG with citations from scratch — Andrej Karpathy style walkthrough</a>
+  </div>
+  <div class="rag-phase">
+    <div class="rp-header"><span class="pill p-rag">Phase 5</span><h4>Architecture + improvements you already built vs what to add</h4></div>
+    <p>Your existing RAG project likely covers Phases 1–4. The things that make it FAANG-level are the upgrades below. Each one is a concrete interview talking point.</p>
+    <div class="rag-steps">
+      <div class="rag-step">Hybrid search (BM25 + FAISS) → shows you understand retrieval tradeoffs</div>
+      <div class="rag-step">Query rewriting → shows understanding of LLM as orchestrator, not just generator</div>
+      <div class="rag-step">Caching embeddings and responses (Redis or dict-based) → shows systems thinking</div>
+      <div class="rag-step">Evaluation metrics: RAGAS framework — faithfulness, answer relevancy, context precision</div>
+      <div class="rag-step">FastAPI backend + Streamlit or React frontend — shows full-stack ability</div>
+      <div class="rag-step">Docker deployment — shows you can ship, not just prototype</div>
+    </div>
+    <a class="yt-link" href="https://www.youtube.com/watch?v=qN_2fnOPY-M">Production RAG — Full pipeline with FastAPI — Rabbitmetrics</a>
+  </div>
+</div>
+
+<div id="projects" class="sec">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem;line-height:1.6">These mini-projects are scoped for 1–3 days each and are picked to complement your existing ML + AWS profile and fill visible gaps (web back-end, full-stack, database design). Each one is a concrete resume line and a demo-able GitHub repo.</p>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <span class="pweek" style="background:#E6F1FB;color:#185FA5">Week 1 · 2 days</span>
+      <h4>SQL analytics dashboard (Streamlit + MySQL)</h4>
+      <p>Connect your existing salary prediction dataset to MySQL. Build a Streamlit dashboard with filter controls (country, role, experience). Shows SQL + Python + data viz in one project.</p>
+      <div class="stack"><span class="stag">MySQL</span><span class="stag">Streamlit</span><span class="stag">Pandas</span><span class="stag">SQLAlchemy</span></div>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=Sb0A9i6d320">Streamlit + SQL dashboard tutorial</a>
+    </div>
+    <div class="proj-card">
+      <span class="pweek" style="background:#EAF3DE;color:#3B6D11">Week 2 · 2 days</span>
+      <h4>Flask REST API for PCOS predictor</h4>
+      <p>Wrap your existing PCOS ML model in a Flask/FastAPI REST endpoint. Expose /predict POST route. Add Swagger docs. Bridges ML and web dev — very resume-powerful because you already have the model.</p>
+      <div class="stack"><span class="stag">FastAPI</span><span class="stag">Scikit-learn</span><span class="stag">Pydantic</span><span class="stag">Swagger</span></div>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=h5wLuVDr0oc">FastAPI ML model deployment</a>
+    </div>
+    <div class="proj-card">
+      <span class="pweek" style="background:#FAEEDA;color:#854F0B">Week 3 · 3 days</span>
+      <h4>Placement portal (Flask + MySQL CRUD)</h4>
+      <p>Build a mini placement management system — companies, students, applications. Full CRUD with proper normalized schema. Directly relevant to your T&amp;P Cell role. Great for interviews.</p>
+      <div class="stack"><span class="stag">Flask</span><span class="stag">MySQL</span><span class="stag">Jinja2</span><span class="stag">DB Design</span></div>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=Z1RJmh_OqeA">Flask + MySQL full CRUD app</a>
+    </div>
+    <div class="proj-card">
+      <span class="pweek" style="background:#FBEAF0;color:#72243E">Week 4 · 2 days</span>
+      <h4>RAG upgrade — hybrid search + evaluation</h4>
+      <p>Add BM25 hybrid search to your existing RAG. Plug in RAGAS evaluation framework. Document the before/after retrieval quality. One commit, huge interview talking point.</p>
+      <div class="stack"><span class="stag">LangChain</span><span class="stag">BM25</span><span class="stag">RAGAS</span><span class="stag">FAISS</span></div>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=sVcwVQRHIc8">RAGAS evaluation for RAG systems</a>
+    </div>
+    <div class="proj-card">
+      <span class="pweek" style="background:#EEEDFE;color:#3C3489">Week 5 · 2 days</span>
+      <h4>ML experiment tracker (FastAPI + MongoDB)</h4>
+      <p>Log your ML model runs (params, metrics, model path) to MongoDB via a FastAPI backend. Query best runs. Shows NoSQL + API + ML integration — rare combo for undergrads.</p>
+      <div class="stack"><span class="stag">FastAPI</span><span class="stag">MongoDB</span><span class="stag">Motor</span><span class="stag">Python</span></div>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=G7hGonEa4_Q">FastAPI + MongoDB async tutorial</a>
+    </div>
+    <div class="proj-card">
+      <span class="pweek" style="background:#E1F5EE;color:#0F6E56">Week 6 · 2 days</span>
+      <h4>Deploy everything + portfolio update</h4>
+      <p>Dockerize the RAG API and one other project. Deploy on Railway (free). Update your portfolio site with new project cards, architecture diagrams, and demo GIFs. Clean READMEs for all repos.</p>
+      <div class="stack"><span class="stag">Docker</span><span class="stag">Railway</span><span class="stag">GitHub</span><span class="stag">Portfolio</span></div>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=iqqDU2crIEQ">Docker + Railway deploy Python app</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const days = [
+  {d:1,w:1,t:"RAG foundations + Arrays",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Discrete maths — Propositional Logic, truth tables, tautology. GFG GATE batch: start from Module 1.",yt:"https://www.youtube.com/watch?v=sV_T5mSP_3Q",ytl:"GATE Discrete Maths — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Watch: What is RAG? Understand retrieval vs generation, embedding space intuition. Set up Python env: install langchain, faiss-cpu, sentence-transformers, streamlit.",yt:"https://www.youtube.com/watch?v=T-D1OfcDW1M",ytl:"RAG from scratch — James Briggs"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Two Sum (Easy) — hash map approach. Understand time/space tradeoff. Write clean code with comments.",yt:"https://www.youtube.com/watch?v=KLlXCFG5TnA",ytl:"Two Sum — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Revise Propositional Logic notes. Set up GitHub repo for RAG project — add README skeleton."},
+   ],out:"Env set up, RAG repo created, Day 1 LC done"},
+
+  {d:2,w:1,t:"Embeddings + Set Theory",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Set Theory — sets, subsets, power sets, Venn diagrams, set operations. Solve 10 GATE PYQs from GFG batch.",yt:"https://www.youtube.com/watch?v=ySus5ZS0b94",ytl:"Set Theory GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Deep dive: what are embeddings? Cosine similarity intuition. Load a PDF using PyPDFLoader, print raw text, understand the structure.",yt:"https://www.youtube.com/watch?v=ySus5ZS0b94",ytl:"Embeddings explained — Sam Witteveen"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Best Time to Buy and Sell Stock (Easy) — sliding window intuition. Key insight: track running minimum.",yt:"https://www.youtube.com/watch?v=1pkOgXD63yU",ytl:"Stock problem — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Revise Set Theory. Write embeddings notes — explain cosine similarity in your own words."},
+   ],out:"Can load and inspect a PDF, understand embedding space"},
+
+  {d:3,w:1,t:"Text cleaning + Relations",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Relations — types (reflexive, symmetric, transitive, equivalence), composition, closures. Solve 10 PYQs.",yt:"https://www.youtube.com/watch?v=pjjBiMpFHUA",ytl:"Relations — GATE lectures"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Clean extracted PDF text: regex to remove headers/footers/page numbers, normalize whitespace. Use UnstructuredFileLoader for messy PDFs. Write a clean_text() function.",yt:"https://www.youtube.com/watch?v=T-D1OfcDW1M",ytl:"Document loaders LangChain"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Valid Anagram (Easy) — two approaches: sort vs frequency map. Understand when each is better.",yt:"https://www.youtube.com/watch?v=9UtInBqnCgA",ytl:"Valid Anagram — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Relations PYQ drill. Clean text function: test on 3 different PDFs."},
+   ],out:"Robust text extraction pipeline for any PDF"},
+
+  {d:4,w:1,t:"Chunking + Functions",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Functions — injective, surjective, bijective, composition, inverse. Graph theory intro: definitions, types. PYQ drill.",yt:"https://www.youtube.com/watch?v=YfNaqrGUaKA",ytl:"Functions GATE"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Implement chunking: RecursiveCharacterTextSplitter with chunk_size=512, chunk_overlap=64. Experiment with chunk_size=256 and 1024. Print chunks, compare quality. Understand why overlap matters.",yt:"https://www.youtube.com/watch?v=8OJC21T2SL4",ytl:"Chunking strategies — Greg Kamradt"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Palindrome Check (Easy) — two pointer. Then: Group Anagrams (Medium) — hash map with sorted string as key.",yt:"https://www.youtube.com/watch?v=jJXJ16kPFWg",ytl:"Group Anagrams — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"SQL Analytics dashboard — Day 1: Load salary CSV into MySQL table using Python. Set up schema with proper types."},
+   ],out:"Chunking pipeline done, chunks with metadata"},
+
+  {d:5,w:1,t:"FAISS + Sliding Window",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Graph Theory — adjacency matrix vs list, graph traversal preview, spanning trees intro. Combinatorics: permutations, combinations.",yt:"https://www.youtube.com/watch?v=gXgEDyodOJU",ytl:"Graph Theory GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Build vector store: load HuggingFace 'all-MiniLM-L6-v2', embed chunks, store in FAISS. Run a test similarity search — see which chunks return for a sample query. Save FAISS index to disk.",yt:"https://www.youtube.com/watch?v=ySus5ZS0b94",ytl:"FAISS vector store — Sam Witteveen"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Max Sum Subarray of size K (sliding window). Then: Longest Substring Without Repeating Characters (Medium).",yt:"https://www.youtube.com/watch?v=wiGpZaVUBLU",ytl:"Sliding Window — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"SQL Dashboard — Day 2: Build Streamlit UI with sidebar filters. Connect to MySQL via SQLAlchemy. Show live bar charts."},
+   ],out:"FAISS index built and queryable, SQL dashboard v1 done"},
+
+  {d:6,w:1,t:"Basic Q&A + Two Pointers",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Combinatorics deep dive — pigeonhole principle, inclusion-exclusion. Solve 15 GATE PYQs on all Week 1 topics.",yt:"https://www.youtube.com/watch?v=XB4MIexjvY0",ytl:"Combinatorics GATE"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Wire the full pipeline: user question → embed → FAISS search → top-3 chunks → prompt template → LLM (use HuggingFaceHub free or OpenAI). Get your first end-to-end answer.",yt:"https://www.youtube.com/watch?v=3yPBVii7Ct0",ytl:"Basic RAG pipeline — end to end"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Remove Duplicates from Sorted Array (Easy). Merge Sorted Array (Easy). Two pointer pattern recognition.",yt:"https://www.youtube.com/watch?v=DEk6_ZFniIo",ytl:"Two Pointers — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Test RAG system on 5 different questions. Note failures. Revise Week 1 GATE topics."},
+   ],out:"Working end-to-end RAG Q&A system"},
+
+  {d:7,w:1,t:"Prefix Sum + Week 1 Revision",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Full Week 1 GATE revision — Discrete Maths. Take a mini-mock: 20 questions, timed 40 min. Analyze mistakes.",yt:"https://www.youtube.com/watch?v=sV_T5mSP_3Q",ytl:"Discrete Maths full revision"},
+    {time:"10 AM–12 PM",type:"rag",label:"RAG",detail:"Refactor: split code into ingestion.py, retriever.py, generator.py, app.py. Clean architecture from Day 1 pays dividends for weeks. Add docstrings.",yt:"https://www.youtube.com/watch?v=qN_2fnOPY-M",ytl:"RAG clean architecture"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Range Sum Query (prefix sum). Subarray Sum Equals K (Medium) — prefix sum + hash map. Classic pattern.",yt:"https://www.youtube.com/watch?v=7pJo_rM0z_s",ytl:"Prefix Sum — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Weekly review: what went well, what was hard. Update GitHub with this week's code. Rest."},
+   ],out:"Week 1 complete — clean RAG repo, 7 LC problems done"},
+
+  {d:8,w:2,t:"RAG citations + Linked List",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Data Structures — arrays, linked lists, stacks, queues. GATE focuses on time complexity. Solve 10 PYQs on DS.",yt:"https://www.youtube.com/watch?v=RBSGKlAvoiM",ytl:"DSA GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add citations: modify retriever to return (chunk_text, source_filename, page_number) tuples. Update prompt template to include source info. Display citations in output. This is the biggest interview differentiator.",yt:"https://www.youtube.com/watch?v=LhnCsygAvzY",ytl:"RAG with citations — LangChain"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Reverse Linked List (Easy) — iterative and recursive. Draw the pointer manipulation on paper first.",yt:"https://www.youtube.com/watch?v=G0_I-ZF0S38",ytl:"Reverse Linked List — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"Start Flask API for PCOS predictor — Day 1: Set up FastAPI app, load saved sklearn model, write /predict POST endpoint with Pydantic schema."},
+   ],out:"RAG shows source + page citations, PCOS API skeleton"},
+
+  {d:9,w:2,t:"Better chunking + Linked List II",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Sorting algorithms — Bubble, Selection, Insertion, Merge, Quick, Heap sort. Complexity analysis for best/worst/avg. PYQ drill.",yt:"https://www.youtube.com/watch?v=pkkFqlG0Dck",ytl:"Sorting GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Tune chunking: experiment with semantic chunking vs fixed-size. Try chunk_size 256, 512, 1024. Add top-k parameter and test k=3 vs k=5. Log retrieval quality manually for 10 test questions.",yt:"https://www.youtube.com/watch?v=8OJC21T2SL4",ytl:"Chunking experiments — Greg Kamradt"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Linked List Cycle Detection (Floyd's algorithm). Merge Two Sorted Lists (Easy).",yt:"https://www.youtube.com/watch?v=gBTe7lFR3vc",ytl:"Linked List Cycle — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"PCOS API — Day 2: Add /health and /docs endpoints. Test with Postman. Add input validation (Pydantic). Deploy locally and test 5 requests."},
+   ],out:"Tuned chunker, PCOS REST API done and testable"},
+
+  {d:10,w:2,t:"DB Design + Stacks",pills:["lc","web","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Searching — linear, binary, BST operations. Hashing — collision resolution (chaining, open addressing). PYQ drill.",yt:"https://www.youtube.com/watch?v=KAm3YoHCDGs",ytl:"Searching and Hashing GATE"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Database design: Normalization — 1NF, 2NF, 3NF, BCNF with examples. Draw ER diagram for Placement Portal on Draw.io. Identify entities, relationships, cardinality.",yt:"https://www.youtube.com/watch?v=GFQaEYEc8_0",ytl:"Normalization — Caleb Curry"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Valid Parentheses (Easy) — stack. Min Stack (Medium) — stack with O(1) getMin.",yt:"https://www.youtube.com/watch?v=WxmWOM8eMco",ytl:"Valid Parentheses — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Review normalization. Draw final ER diagram for Placement Portal. Push to GitHub."},
+   ],out:"Placement Portal ER diagram finalized"},
+
+  {d:11,w:2,t:"DB schema SQL + Stack advanced",pills:["lc","web","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Trees — binary trees, BSTs, AVL trees, B-trees. Traversals and their complexity. PYQ drill.",yt:"https://www.youtube.com/watch?v=H5JubkIy_p8",ytl:"Trees GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Implement Placement Portal schema in MySQL. Create tables: students, companies, job_postings, applications. Add foreign keys, constraints, indexes. Insert 20 sample rows. Run complex JOIN queries.",yt:"https://www.youtube.com/watch?v=HXV3zeQKqGY",ytl:"MySQL advanced schema — Traversy Media"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Daily Temperatures (Medium) — monotonic stack. Next Greater Element I (Easy).",yt:"https://www.youtube.com/watch?v=cTBiBSnjO3c",ytl:"Monotonic Stack — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"Placement Portal — Day 1: Set up Flask app, SQLAlchemy models. Implement /students GET and POST routes."},
+   ],out:"MySQL schema live, Flask CRUD routes started"},
+
+  {d:12,w:2,t:"Advanced SQL queries + Queue",pills:["lc","web","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Heaps — min-heap, max-heap, heap sort, priority queues. GATE loves heap complexity questions. PYQ drill.",yt:"https://www.youtube.com/watch?v=B7hVxCmfPtM",ytl:"Heaps GATE"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Advanced SQL: Window functions (ROW_NUMBER, RANK, LAG, LEAD), CTEs with WITH clause, recursive queries. Write 10 complex queries on Placement Portal data.",yt:"https://www.youtube.com/watch?v=Ww71knvhQ-s",ytl:"SQL Window Functions — Alex the Analyst"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Implement Queue using Stacks (Easy). Sliding Window Maximum (Hard) — deque. Understand the pattern.",yt:"https://www.youtube.com/watch?v=DfljaUwZsOk",ytl:"Sliding Window Maximum — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"Placement Portal — Day 2: Add /companies, /applications routes. Implement search with query params. Test all routes."},
+   ],out:"Advanced SQL mastered, Placement Portal API v1 done"},
+
+  {d:13,w:2,t:"RAG Streamlit UI + Remove Nth",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Graph algorithms — BFS, DFS with complexity. Dijkstra's algorithm. Spanning trees — Kruskal's, Prim's. PYQ drill.",yt:"https://www.youtube.com/watch?v=pcKY4hjDrxk",ytl:"Graph Algorithms GATE"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Build Streamlit UI for RAG: file upload widget, text input for question, display answer with citations in styled cards. Add spinner during retrieval. Make it demo-able.",yt:"https://www.youtube.com/watch?v=vc6KuBOc4Y4",ytl:"Streamlit RAG app — Alejandro AO"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Remove Nth Node from End (Medium) — two pointer. Reorder List (Medium) — find middle + reverse + merge.",yt:"https://www.youtube.com/watch?v=XVuQxVej6y8",ytl:"Remove Nth Node — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Test RAG UI end-to-end with 5 PDFs. Document bugs. Commit all code."},
+   ],out:"RAG has a working Streamlit UI with citations"},
+
+  {d:14,w:2,t:"Week 2 Revision + Sort Colors",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Week 2 GATE mini-mock — 25 questions on DS + algorithms. Timed 50 min. Analyze every wrong answer.",yt:"https://www.youtube.com/watch?v=pkkFqlG0Dck",ytl:"DSA GATE revision"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Code cleanup and refactor: ensure ingestion, retrieval, generation are fully decoupled. Write unit tests for retriever — test 5 known Q&A pairs. Add requirements.txt.",yt:"https://www.youtube.com/watch?v=qN_2fnOPY-M",ytl:"RAG architecture best practices"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Sort Colors (Dutch Flag — Medium). Contains Duplicate (Easy). First Unique Character in String (Easy).",yt:"https://www.youtube.com/watch?v=4xbWSRZHqac",ytl:"Sort Colors — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Push all Week 2 code to GitHub. Update README files for both RAG and Placement Portal repos."},
+   ],out:"Week 2 complete — RAG has UI, 14 LC done"},
+
+  {d:15,w:3,t:"Hybrid Search (BM25) + Binary Search",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"OS — Processes, threads, CPU scheduling algorithms (FCFS, SJF, Round Robin, Priority). Solve 10 PYQs.",yt:"https://www.youtube.com/watch?v=vBURTt97EkA",ytl:"OS Scheduling GATE — Neso Academy"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add hybrid search: install rank_bm25. Implement BM25Retriever alongside FAISS. Combine scores with weighted merge (0.4 * BM25 + 0.6 * dense). Compare quality on 10 test questions.",yt:"https://www.youtube.com/watch?v=LhnCsygAvzY",ytl:"Hybrid search BM25 + FAISS"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Binary Search (Easy) — classic. Find Minimum in Rotated Array (Medium) — modified binary search.",yt:"https://www.youtube.com/watch?v=s4DPM8ct1pI",ytl:"Binary Search — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Document hybrid search improvement: 'retrieval precision improved from X to Y on test set'. This goes in your README."},
+   ],out:"Hybrid search implemented and benchmarked"},
+
+  {d:16,w:3,t:"OS Deadlocks + Binary Search II",pills:["lc","gate","rag"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Deadlocks — conditions, detection, prevention, avoidance (Banker's algorithm). Memory management — paging, segmentation, TLB. PYQ drill.",yt:"https://www.youtube.com/watch?v=Pu2KN1q7cIk",ytl:"Deadlocks GATE — Neso Academy"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add query rewriting: before retrieval, send user query to LLM with prompt 'Rewrite this query to improve document retrieval: {query}'. Compare retrieval results before and after rewriting. Log examples.",yt:"https://www.youtube.com/watch?v=VuHEmfV9_Kk",ytl:"Query rewriting RAG"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Find in Rotated Array (Medium). Search Insert Position (Easy). Koko Eating Bananas (Medium) — binary search on answer.",yt:"https://www.youtube.com/watch?v=U8XENwh8Oy8",ytl:"Binary Search on answer — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Memory management PYQ drill. Paging calculation practice."},
+   ],out:"Query rewriting added, OS memory concepts solid"},
+
+  {d:17,w:3,t:"Python FastAPI + Trees",pills:["lc","web","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"DBMS — ER model, relational model, relational algebra (select, project, join, rename). SQL from GATE perspective. PYQ drill.",yt:"https://www.youtube.com/watch?v=GaHJnJqhH5I",ytl:"DBMS GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Build FastAPI back-end from scratch: routing, path/query params, request body with Pydantic, response models, HTTP status codes, error handling. Wire to MySQL with SQLAlchemy async.",yt:"https://www.youtube.com/watch?v=0sOvCWFmrtA",ytl:"FastAPI full tutorial — Sanjeev Thiyagarajan"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Inorder Traversal (Easy) — iterative. Maximum Depth of Binary Tree (Easy). Symmetric Tree (Easy).",yt:"https://www.youtube.com/watch?v=g_S5WuasWUE",ytl:"Tree traversals — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"ML Experiment Tracker — Day 1: Set up FastAPI + Motor (async MongoDB). Define schema for experiment runs. Implement /runs POST endpoint."},
+   ],out:"FastAPI + SQLAlchemy wired, Tree traversals done"},
+
+  {d:18,w:3,t:"SQL Transactions + LCA",pills:["lc","web","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"DBMS — Transactions, ACID properties, serializability, concurrency control (2PL, timestamp ordering). PYQ drill.",yt:"https://www.youtube.com/watch?v=5ZjhNTM8XU8",ytl:"Transactions GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Implement full CRUD for Placement Portal with FastAPI: students, companies, applications. Add transaction handling for application submissions. Test with pytest.",yt:"https://www.youtube.com/watch?v=h5wLuVDr0oc",ytl:"FastAPI CRUD with DB"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Lowest Common Ancestor BST (Medium). Kth Smallest Element in BST (Medium). Validate BST (Medium).",yt:"https://www.youtube.com/watch?v=gs2LMfuOR9k",ytl:"LCA — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"ML Experiment Tracker — Day 2: Add /runs GET with filters (model_name, min_accuracy). Add /runs/{id} GET. Test all endpoints with Postman."},
+   ],out:"Placement Portal FastAPI done, BST problems cleared"},
+
+  {d:19,w:3,t:"RAG Memory + Recursion",pills:["lc","rag","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Computer Networks — OSI model layers and their roles. TCP/IP stack. Differences, PYQ questions. Subnetting basics.",yt:"https://www.youtube.com/watch?v=0y6FtKsg6J4",ytl:"Computer Networks GATE — Neso Academy"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add conversation memory: use ConversationBufferMemory with ConversationalRetrievalChain. Test multi-turn conversations — reference something said 2 turns ago. Limit memory to last 5 turns.",yt:"https://www.youtube.com/watch?v=cVA1RPsGQcw",ytl:"LangChain memory + RAG"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Subsets (Medium) — recursion/backtracking. Permutations (Medium) — backtracking template. Learn the pattern.",yt:"https://www.youtube.com/watch?v=REOH22Xwdkk",ytl:"Subsets — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"OSI model deep drill. Test RAG memory: 10-turn conversation. Note edge cases."},
+   ],out:"RAG has multi-turn memory, Networks foundations solid"},
+
+  {d:20,w:3,t:"Networks TCP + BST",pills:["lc","gate","web"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"TCP — 3-way handshake, flow control, congestion control. UDP differences. Sliding window protocol. PYQ numericals.",yt:"https://www.youtube.com/watch?v=0y6FtKsg6J4",ytl:"TCP/UDP GATE — Neso Academy"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Add caching to RAG and FastAPI: implement simple dict-based cache for embedding lookups (hash query → cached result). Measure response time before and after. Cache hit rate log.",yt:"https://www.youtube.com/watch?v=U3RkDLtS7uY",ytl:"Caching strategies Python"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Combination Sum (Medium) — backtracking. Word Search (Medium) — DFS backtracking on grid.",yt:"https://www.youtube.com/watch?v=GBKI9VSKdGg",ytl:"Combination Sum — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"TCP/UDP numericals. Document caching improvement in README."},
+   ],out:"Caching added, backtracking pattern mastered"},
+
+  {d:21,w:3,t:"Week 3 Revision + BFS",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Week 3 GATE mini-mock — OS + DBMS + Networks: 30 questions, timed 60 min. Full analysis of wrong answers.",yt:"https://www.youtube.com/watch?v=vBURTt97EkA",ytl:"OS + DBMS GATE revision"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Build FastAPI back-end for RAG: /ingest endpoint (upload file → process), /ask endpoint (question → answer+citations), /health. Test with curl. Separate from Streamlit frontend.",yt:"https://www.youtube.com/watch?v=qN_2fnOPY-M",ytl:"FastAPI RAG backend"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Number of Islands (Medium) — BFS. Flood Fill (Easy) — DFS. Understand grid graph pattern.",yt:"https://www.youtube.com/watch?v=pV2kpPD66nE",ytl:"Number of Islands — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Weekly review. Update all GitHub repos. RAG FastAPI backend deployed locally — test all endpoints."},
+   ],out:"Week 3 complete — RAG has FastAPI backend, 21 LC done"},
+
+  {d:22,w:4,t:"Networks routing + Graph DFS",pills:["lc","gate","rag"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Routing algorithms — Distance Vector, Link State (Dijkstra). IP addressing, subnetting, CIDR. DNS, HTTP basics. PYQ drill.",yt:"https://www.youtube.com/watch?v=0y6FtKsg6J4",ytl:"Routing Algorithms GATE"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add RAGAS evaluation: install ragas library. Create test dataset of 20 Q&A pairs from your document. Compute faithfulness, answer_relevancy, context_precision scores. Write report.",yt:"https://www.youtube.com/watch?v=sVcwVQRHIc8",ytl:"RAGAS evaluation — Rabbitmetrics"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Clone Graph (Medium) — DFS. Course Schedule (Medium) — cycle detection with DFS.",yt:"https://www.youtube.com/watch?v=tWVWeAqZ0WU",ytl:"Course Schedule — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Subnetting practice — GATE numericals. RAGAS scores documented in README."},
+   ],out:"RAG has quantified evaluation scores"},
+
+  {d:23,w:4,t:"TOC Regular Languages + Graph BFS",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Theory of Computation — Regular languages, DFA, NFA, epsilon-NFA, subset construction. Prove equivalence. PYQ drill.",yt:"https://www.youtube.com/watch?v=58N2N7zJGrQ",ytl:"TOC — Neso Academy"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"MongoDB: install Motor (async MongoDB driver). Design document schema for ML experiment tracker (no fixed schema benefit). Implement CRUD operations. Compare document model vs relational for this use case.",yt:"https://www.youtube.com/watch?v=G7hGonEa4_Q",ytl:"FastAPI + MongoDB — Patrick Loeber"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Walls and Gates (Medium). 01 Matrix (Medium) — multi-source BFS. Shortest path patterns.",yt:"https://www.youtube.com/watch?v=A8fl278zugI",ytl:"Multi-source BFS — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Mini-project",detail:"ML Experiment Tracker — finalize: add /runs/best endpoint (highest accuracy). Add pagination. Test 20 experiment entries."},
+   ],out:"ML Experiment Tracker complete, MongoDB CRUD mastered"},
+
+  {d:24,w:4,t:"TOC CFG + Union Find",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Context-Free Grammars, Parse trees, Pushdown Automata (PDA), CNF conversion. PYQ drill.",yt:"https://www.youtube.com/watch?v=58N2N7zJGrQ",ytl:"CFG and PDA — Neso Academy"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Build the full CRUD Placement Portal: Flask/FastAPI + MySQL. Add search endpoint (students by CGPA range, companies by domain). Add pagination. Test all 15 endpoints.",yt:"https://www.youtube.com/watch?v=Z1RJmh_OqeA",ytl:"Flask MySQL full project"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Redundant Connection (Medium) — Union Find. Number of Connected Components (Medium).",yt:"https://www.youtube.com/watch?v=8f1XPm4WOUc",ytl:"Union Find — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"CFG derivations practice. Placement Portal: write ER diagram in README, add sample data screenshots."},
+   ],out:"Placement Portal v1 complete with docs"},
+
+  {d:25,w:4,t:"Compiler Lexical Analysis + Heap",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Compiler Design — Lexical analysis, tokens, LEX, Regular expressions to DFA. PYQ drill.",yt:"https://www.youtube.com/watch?v=Chema25nHxM",ytl:"Compiler Design GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add streaming responses to RAG API: use FastAPI StreamingResponse + LangChain streaming callbacks. Tokens appear word-by-word like ChatGPT. This is a strong demo feature.",yt:"https://www.youtube.com/watch?v=qN_2fnOPY-M",ytl:"Streaming FastAPI LangChain"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"K Largest Elements in Array (Medium) — min-heap. Top K Frequent Elements (Medium) — heap + hash map.",yt:"https://www.youtube.com/watch?v=YjnT2Zz7hEs",ytl:"K Largest Elements — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Lexical analysis PYQ drill. Test RAG streaming — demo video for portfolio."},
+   ],out:"RAG streams responses, heap problems done"},
+
+  {d:26,w:4,t:"Compiler Parsing + Trie",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Parsing — LL(1), LR(0), SLR, LALR. First and Follow sets. Predict sets. PYQ drill (high weightage in GATE).",yt:"https://www.youtube.com/watch?v=Chema25nHxM",ytl:"Parsing GATE — Knowledge Gate"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add error handling and edge cases: empty query, no relevant docs found, LLM timeout. Return meaningful error messages. Add input validation. Test with adversarial inputs.",yt:"https://www.youtube.com/watch?v=qN_2fnOPY-M",ytl:"RAG production edge cases"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Implement Trie (Medium). Search Suggestions System (Medium). Trie is extremely common in interviews.",yt:"https://www.youtube.com/watch?v=oobqoCJlHA0",ytl:"Trie — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"LL/LR parsing practice — compute First/Follow for 5 grammars. Write Trie implementation in clean Python class."},
+   ],out:"RAG production-ready with error handling"},
+
+  {d:27,w:4,t:"Digital Logic + Graph advanced",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Digital Logic — Boolean algebra, canonical forms, K-map minimization (2,3,4 variables). PYQ drill.",yt:"https://www.youtube.com/watch?v=M0mx8S05v60",ytl:"Digital Logic GATE — Neso Academy"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Docker: write Dockerfile for RAG FastAPI app, docker-compose for app + any dependencies. Build and run locally. Understand multi-stage builds, layer caching.",yt:"https://www.youtube.com/watch?v=iqqDU2crIEQ",ytl:"Docker Python FastAPI"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Pacific Atlantic Water Flow (Medium) — multi-source DFS. Word Ladder (Hard) — BFS on word graph.",yt:"https://www.youtube.com/watch?v=s-VkcjyB55w",ytl:"Pacific Atlantic — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"K-map minimization drill — 10 problems. Docker: test RAG container, fix any issues."},
+   ],out:"RAG Dockerized, Digital Logic foundations done"},
+
+  {d:28,w:4,t:"Week 4 Revision + Alien Dictionary",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Week 4 GATE mini-mock — Networks + TOC + Compiler Design: 30 questions, timed 60 min. Full analysis.",yt:"https://www.youtube.com/watch?v=58N2N7zJGrQ",ytl:"TOC revision"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Deploy RAG on Railway (free tier): connect GitHub repo, set env variables, deploy. Test live URL. Fix any deployment issues. Share link in README.",yt:"https://www.youtube.com/watch?v=iqqDU2crIEQ",ytl:"Railway deployment Python"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Alien Dictionary (Hard) — topological sort. Pacific Atlantic review. Time yourself: 45 min.",yt:"https://www.youtube.com/watch?v=6kTZYvNNyps",ytl:"Alien Dictionary — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Weekly review. 28 LC done. 4 mini-projects pushed to GitHub. RAG live on Railway."},
+   ],out:"Week 4 complete — RAG deployed live, 28 LC done"},
+
+  {d:29,w:5,t:"Digital Logic combinational + DP basics",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Combinational circuits — mux, demux, encoder, decoder, adders. Half adder, full adder truth tables. PYQ drill.",yt:"https://www.youtube.com/watch?v=M0mx8S05v60",ytl:"Combinational Circuits GATE"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Add response time metrics: use Python time module to log ingestion time, retrieval time, generation time separately. Store in a metrics.json. Build a /metrics endpoint in FastAPI.",yt:"https://www.youtube.com/watch?v=qN_2fnOPY-M",ytl:"FastAPI metrics endpoint"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Climbing Stairs (Easy) — DP. House Robber (Medium) — DP. Understand 1D DP pattern: state + transition.",yt:"https://www.youtube.com/watch?v=Y0lT9Fck7qI",ytl:"Dynamic Programming intro — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Combinational circuits PYQ. DP revision: write recurrence relations on paper before coding."},
+   ],out:"RAG has performance metrics, DP 1D pattern understood"},
+
+  {d:30,w:5,t:"Sequential circuits + DP II",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Sequential circuits — latches, flip-flops (SR, D, JK, T), registers, counters. State diagrams. PYQ drill.",yt:"https://www.youtube.com/watch?v=M0mx8S05v60",ytl:"Sequential Circuits GATE"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Advanced MongoDB: aggregation pipeline ($match, $group, $sort, $project, $lookup). Write 5 complex aggregations on experiment tracker data. Add index for performance.",yt:"https://www.youtube.com/watch?v=G7hGonEa4_Q",ytl:"MongoDB aggregation pipeline"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Coin Change (Medium) — DP. Word Break (Medium) — DP. Two important patterns.",yt:"https://www.youtube.com/watch?v=H9bfqozjoqs",ytl:"Coin Change — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Flip-flop state diagram drill. Coin Change: trace through DP table on paper."},
+   ],out:"Sequential circuits mastered, DP medium problems done"},
+
+  {d:31,w:5,t:"GATE full mock #1 + DP 2D",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"FULL GATE MOCK TEST #1 — all subjects, 65 questions, 3 hours. Use GFG GATE batch mock or MADE Easy test series. No breaks during test.",yt:"https://www.youtube.com/watch?v=3b5zCFSmVvU",ytl:"GATE full mock strategy"},
+    {time:"10 AM–12 PM",type:"gate",label:"GATE",detail:"Analyse mock test results: topic-wise score, time management. List top 3 weakest topics."},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Unique Paths (Medium) — DP 2D. Longest Common Subsequence (Medium) — DP 2D grid.",yt:"https://www.youtube.com/watch?v=IFaGNCW-a-s",ytl:"DP 2D — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Mock analysis: targeted revision of 2 weakest GATE topics. Don't do new topics today."},
+   ],out:"First full mock done, weak topics identified"},
+
+  {d:32,w:5,t:"Weak topic revision + Edit Distance",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Revise top 2 weakest topics from mock #1. Solve 20 PYQs specifically on those topics.",yt:"https://www.youtube.com/watch?v=pkkFqlG0Dck",ytl:"Targeted GATE revision"},
+    {time:"10 AM–12:30 PM",type:"web",label:"Web Dev",detail:"Deploy Placement Portal on Railway: Dockerfile + MySQL on Railway. Test all endpoints on live URL. Write complete README with ER diagram, API docs, screenshots.",yt:"https://www.youtube.com/watch?v=iqqDU2crIEQ",ytl:"Deploy Flask MySQL Railway"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Edit Distance (Hard) — DP. 0/1 Knapsack pattern. Minimum Path Sum (Medium).",yt:"https://www.youtube.com/watch?v=XYi2-LPrwm4",ytl:"Edit Distance — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Update portfolio site with Placement Portal and ML Tracker project cards. Add live demo links."},
+   ],out:"2 projects live on Railway, portfolio updated"},
+
+  {d:33,w:5,t:"GATE full mock #2 + Intervals",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"FULL GATE MOCK TEST #2 — different test series. 65 questions, 3 hours. Compare score with Mock #1.",yt:"https://www.youtube.com/watch?v=3b5zCFSmVvU",ytl:"GATE mock strategy #2"},
+    {time:"10 AM–12 PM",type:"gate",label:"GATE",detail:"Analyse Mock #2. Did weak topics improve? New weaknesses? Update revision plan."},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Merge Intervals (Medium). Non-overlapping Intervals (Medium). Meeting Rooms II (Medium) — greedy.",yt:"https://www.youtube.com/watch?v=44H3cEC2fFM",ytl:"Merge Intervals — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Interval problems: draw on paper. Mock #2 analysis document."},
+   ],out:"Mock #2 done, interval pattern mastered"},
+
+  {d:34,w:5,t:"Weak topic drill + Greedy",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Targeted revision based on Mock #2 analysis. Solve 25 PYQs on 2–3 weak areas. Practice speed.",yt:"https://www.youtube.com/watch?v=pkkFqlG0Dck",ytl:"GATE speed drills"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Polish RAG GitHub: add architecture diagram (draw on Excalidraw), GIF demo, detailed README with: What it does, Architecture, How to run, Evaluation metrics, Future improvements.",yt:"https://www.youtube.com/watch?v=e9hJZrT7HLv",ytl:"Perfect GitHub README"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Jump Game (Medium) — greedy. Gas Station (Medium) — greedy. Jump Game II (Medium).",yt:"https://www.youtube.com/watch?v=Yan0cv2cLy8",ytl:"Jump Game — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"RAG README finalized. Record 2-min demo video using Loom. Add to portfolio."},
+   ],out:"RAG fully documented and demo-ready"},
+
+  {d:35,w:5,t:"Week 5 Revision + Bit Manipulation",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Digital Logic revision — all circuits. Previous year 2020–2024 Digital Logic questions. Solve all.",yt:"https://www.youtube.com/watch?v=M0mx8S05v60",ytl:"Digital Logic PYQ 2020–2024"},
+    {time:"10 AM–12 PM",type:"web",label:"Web Dev",detail:"Write tests for all APIs: pytest + httpx for FastAPI. Cover happy path + error cases. Aim for 80% coverage. Add CI badge to README."},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Single Number (Easy) — XOR. Power of Two (Easy). Sum of Two Integers (Medium) — bit manipulation.",yt:"https://www.youtube.com/watch?v=qMPX1AOa83k",ytl:"Bit Manipulation — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Weekly review. All 5 mini-projects complete. 35 LC problems done. 2 GATE mocks done. Rest well."},
+   ],out:"Week 5 complete — everything deployed and tested"},
+
+  {d:36,w:6,t:"GATE full mock #3 + DP Hard",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"FULL GATE MOCK TEST #3 — hardest available test. Focus on speed: GA section (15 marks) must be done first.",yt:"https://www.youtube.com/watch?v=3b5zCFSmVvU",ytl:"GATE mock #3"},
+    {time:"10 AM–12 PM",type:"gate",label:"GATE",detail:"Analyse Mock #3. Compare all 3 mocks: trend analysis. Which subject improved most? Which needs most attention?"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Regular Expression Matching (Hard) — DP. Burst Balloons (Hard) — interval DP. Attempt both.",yt:"https://www.youtube.com/watch?v=ZMLlJIlEnkI",ytl:"Hard DP — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Mock 3 analysis. Final push revision list: top 5 topics that need most work."},
+   ],out:"Mock #3 done, 3-mock trend analysis complete"},
+
+  {d:37,w:6,t:"Final weak topic revision + LRU Cache",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Deep revision of top 2 subjects you need most. Solve 30 PYQs under timed conditions. Review all formula sheets.",yt:"https://www.youtube.com/watch?v=pkkFqlG0Dck",ytl:"GATE final revision"},
+    {time:"10 AM–12:30 PM",type:"rag",label:"RAG",detail:"Interview prep for RAG: prepare verbal answers to: How does RAG work end to end? Why FAISS? Why chunking size 512? How does hybrid search improve results? What are the trade-offs?",yt:"https://www.youtube.com/watch?v=qN_2fnOPY-M",ytl:"RAG interview Q&A"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"LRU Cache (Hard) — OrderedDict / doubly linked list. LFU Cache (Hard) — advanced design.",yt:"https://www.youtube.com/watch?v=7ABFKPK2hD4",ytl:"LRU Cache — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Write one-pager: 'What I built this summer' — RAG system, 5 mini-projects, 42 LC problems, GATE prep. Use this in interviews."},
+   ],out:"Interview answers prepared, cache problems done"},
+
+  {d:38,w:6,t:"Previous year GATE special + Mixed",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"GATE CS PYQ 2022, 2023, 2024 — attempt all 3 papers (can do in 2 sessions over day). Focus on DSA and OS sections.",yt:"https://www.youtube.com/watch?v=3b5zCFSmVvU",ytl:"GATE PYQ 2022–2024"},
+    {time:"10 AM–12 PM",type:"gate",label:"GATE",detail:"Analyse PYQ papers. Note pattern: what % is DSA, OS, Networks? Adjust final revision accordingly."},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Timed mock: 2 random Medium problems, 45 min. Then review. Track your accuracy on first attempt.",yt:"https://www.youtube.com/watch?v=KLlXCFG5TnA",ytl:"LC timed practice strategy"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Portfolio: final check — all project links work, all READMEs complete, LinkedIn updated with projects."},
+   ],out:"PYQ analysis done, portfolio finalized"},
+
+  {d:39,w:6,t:"Comprehensive GATE revision day",pills:["gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Discrete Maths + DSA revision — formula sheet + 20 PYQs each.",yt:"https://www.youtube.com/watch?v=sV_T5mSP_3Q",ytl:"DM + DSA final revision"},
+    {time:"9–11 AM",type:"gate",label:"GATE",detail:"OS + DBMS revision — process scheduling numericals, SQL queries, normalization fast revision.",yt:"https://www.youtube.com/watch?v=vBURTt97EkA",ytl:"OS + DBMS final revision"},
+    {time:"12–2 PM",type:"gate",label:"GATE",detail:"Networks + TOC + Compiler — subnetting numericals, DFA construction, First/Follow revision.",yt:"https://www.youtube.com/watch?v=0y6FtKsg6J4",ytl:"Networks + TOC final"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Re-attempt 5 problems you got wrong earlier. Focus on clean code, edge cases.",},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Rest. Light reading only. No new topics tonight."},
+   ],out:"Full GATE syllabus revised — one topic per hour"},
+
+  {d:40,w:6,t:"Company-tagged LC + Digital Logic final",pills:["lc","gate"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Digital Logic + General Aptitude final revision. GA is 15 marks — series, ratios, data interpretation. Do not skip.",yt:"https://www.youtube.com/watch?v=M0mx8S05v60",ytl:"Digital Logic + GA GATE"},
+    {time:"10 AM–12 PM",type:"lc",label:"LeetCode",detail:"Amazon-tagged problems: 2 Medium, 1 Hard. Google-tagged: 2 Medium. Timed — 25 min per problem.",yt:"https://www.youtube.com/watch?v=KLlXCFG5TnA",ytl:"Company-wise LC strategy"},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Minimum Window Substring (Hard) — sliding window. This is the hardest sliding window problem. Go slow.",yt:"https://www.youtube.com/watch?v=jSto0O4AJbM",ytl:"Minimum Window Substring — NeetCode"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"GATE GA practice: 20 aptitude questions timed. Light revision only."},
+   ],out:"Company-wise LC done, 40 problems total"},
+
+  {d:41,w:6,t:"Final GATE mock + Hard problems",pills:["lc","gate"],
+   slots:[
+    {time:"6–9 AM",type:"gate",label:"GATE",detail:"GATE FINAL MOCK — hardest available. Full 3-hour simulation. Exam conditions: no phone, timer, silence.",yt:"https://www.youtube.com/watch?v=3b5zCFSmVvU",ytl:"GATE final mock strategy"},
+    {time:"10 AM–12 PM",type:"gate",label:"GATE",detail:"Final mock analysis: topic accuracy %, time per question. Note final 2–3 topics for last-day light revision."},
+    {time:"3–4 PM",type:"lc",label:"LeetCode",detail:"Hard mixed: 1 hard DP, 1 hard graph. Track time. If stuck after 20 min, move on.",yt:"https://www.youtube.com/watch?v=KLlXCFG5TnA",ytl:"Hard LC strategy"},
+    {time:"8–9 PM",type:"proj",label:"Review",detail:"Final week retrospective. You've built 6 projects, solved 41 LC problems, done 4 GATE mocks. Write it down."},
+   ],out:"Final mock done — you are ready"},
+
+  {d:42,w:6,t:"Review day + Interview prep",pills:["lc","gate","rag"],
+   slots:[
+    {time:"6–8 AM",type:"gate",label:"GATE",detail:"Light revision only: 2–3 topics from final mock weak areas. No new topics. Read formula sheets.",},
+    {time:"10 AM–12 PM",type:"rag",label:"RAG",detail:"RAG interview prep: write answers to 10 common RAG questions. Practice saying them aloud. Prepare architecture diagram to draw on whiteboard.",},
+    {time:"2–3 PM",type:"lc",label:"LeetCode",detail:"5 Easy problems — fast, to build confidence. Don't attempt Hard today.",},
+    {time:"4–5 PM",type:"proj",label:"Portfolio",detail:"Final portfolio check. All links. LinkedIn. GitHub pins — make sure RAG and best 2 projects are pinned.",},
+    {time:"8–9 PM",type:"proj",label:"Celebrate",detail:"You completed 42 days. 6 projects. 42 LC problems. 4 GATE mocks. 1 production RAG system. That is genuinely impressive. Rest tonight."},
+   ],out:"6 weeks complete — ready for internships and GATE"},
+];
+
+const weekData = {1:days.filter(d=>d.w===1),2:days.filter(d=>d.w===2),3:days.filter(d=>d.w===3),4:days.filter(d=>d.w===4),5:days.filter(d=>d.w===5),6:days.filter(d=>d.w===6)};
+let currentWeek = 1;
+
+function renderWeek(w) {
+  const list = document.getElementById('day-list');
+  list.innerHTML = '';
+  weekData[w].forEach(day => {
+    const pillMap = {lc:'p-lc',gate:'p-gate',web:'p-web',rag:'p-rag',proj:'p-proj'};
+    const pillLabel = {lc:'LeetCode',gate:'GATE',web:'Web Dev',rag:'RAG',proj:'Project'};
+    const pillsHtml = day.pills.map(p=>`<span class="pill ${pillMap[p]}">${pillLabel[p]}</span>`).join('');
+    const slotsHtml = day.slots.map(s=>{
+      const typeColor = {lc:'#185FA5',gate:'#3B6D11',web:'#854F0B',rag:'#72243E',proj:'#3C3489'};
+      const ytHtml = s.yt ? `<a class="yt-link" href="${s.yt}" target="_blank"><i class="ti ti-player-play" style="font-size:12px" aria-hidden="true"></i> ${s.ytl}</a>` : '';
+      return `<div class="slot-row"><div class="slot-time">${s.time}</div><div class="slot-content"><strong style="color:${typeColor[s.type]||'var(--color-text-primary)'}">${s.label}</strong> — ${s.detail}${ytHtml}</div></div>`;
+    }).join('');
+    const outHtml = day.out ? `<div class="output-badge">Output: ${day.out}</div>` : '';
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.innerHTML = `<div class="day-header" onclick="toggleDay(this)"><span class="day-num">Day ${day.d}</span><span class="day-title">${day.t}</span><div class="day-pills">${pillsHtml}</div><span class="chevron">▾</span></div><div class="day-body"><div class="slot-grid">${slotsHtml}</div>${outHtml}</div>`;
+    list.appendChild(card);
+  });
+}
+
+function toggleDay(header) {
+  const body = header.nextElementSibling;
+  const chev = header.querySelector('.chevron');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function showWeek(w, btn) {
+  currentWeek = w;
+  document.querySelectorAll('.wnav').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  renderWeek(w);
+}
+
+function showTab(id, btnId, btn) {
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+renderWeek(1);
+</script>
